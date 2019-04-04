@@ -1,0 +1,165 @@
+<mat-card class="todoapp">
+
+  <!-- Toolbar -->
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <div>Things To Do </div>
+      <div>
+        <button class="cursorPointer" color="indigo" (click)="todoDialog()" mat-button>
+          <span>Add Task </span>
+          <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-card-content *ngIf="todoList.length">
+
+    <!-- Filter section -->
+    <mat-accordion>
+      <mat-expansion-panel class="filter-panel cursorPointer">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Filter ToDo List
+          </mat-panel-title>
+
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="filterForm" class="filter-form">
+
+          <div>
+            <mat-form-field>
+              <mat-label>
+                <span [hidden]="filterForm.get('id').errors">Filter by ID </span><span *ngIf="filterForm.get('id').errors">ID
+                  must contain only numbers</span>
+              </mat-label>
+              <input formControlName="id" matInput placeholder="ID">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>
+                <span [hidden]="filterForm.get('name').errors">Filter by Name </span><span *ngIf="filterForm.get('name').errors">Name
+                  cannot contain special characters</span>
+              </mat-label>
+              <input formControlName="name" matInput placeholder="Name">
+
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>
+                Filter by Due Date
+              </mat-label>
+              <input formControlName="dueDate" [min]="minDate" matInput [matDatepicker]="duedatepicker" placeholder="Due Date"
+                disabled>
+              <mat-datepicker-toggle matSuffix [for]="duedatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #duedatepicker disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+         
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- ToDo List header -->
+    <mat-list>
+      <mat-list-item class="header">
+        <div class="mat-body-2">Title</div>
+        <div class="mat-body-2">Due Date</div>
+        <div class="mat-body-2">Completed</div>
+        <div class="mat-body-2">ID</div>
+        <div class="mat-body-2">Actions</div>
+      </mat-list-item>
+    </mat-list>
+
+    <!-- ToDo List Items -->
+    <mat-list>
+      <form cdkDropList class="todo-list" (cdkDropListDropped)="drop($event)">
+        <mat-list-item cdkDrag class="todo-box" *ngFor="let todo of todoList | SearchPipe:filterForm.value ; let index=index"
+          class="list-item">
+
+          <div *cdkDragPreview>
+
+            <div>
+              {{todo.title}}
+            </div>
+
+            <div>
+              {{todo.dueDate}}
+            </div>
+
+          </div>
+
+          <div class="todo-custom-placeholder" *cdkDragPlaceholder></div>
+
+          <div [class.completed]="todo.completed">
+            <span>{{todo.title}}</span>
+
+            <span [hidden]="!todo.completed">
+              <mat-icon color="primary">done</mat-icon>
+            </span>
+
+            <span [hidden]="todo.completed">
+              <mat-icon color="primary">notification_important</mat-icon>
+            </span>
+          </div>
+
+          <div>
+            {{todo.dueDate| date:'yyyy/MM/dd'}}
+          </div>
+
+          <div>
+            <mat-checkbox 
+              color="primary" 
+              type="checkbox"
+              id="item_{{index}}" 
+              [name]="'item'+index" 
+              [(ngModel)]="todo.completed">
+            </mat-checkbox>
+          </div>
+
+          <div>
+            {{todo.id}}
+          </div>
+
+          <!-- Edit -->
+          <div>
+            <mat-select>
+              <mat-option (click)="todoDialog(todo)">
+                Edit
+              </mat-option>
+              <mat-option (click)="duplicate(index)">
+                Duplicate
+              </mat-option>
+              <mat-option (click)="remove(index)">
+                Delete
+              </mat-option>
+            </mat-select>
+          </div>
+
+        </mat-list-item>
+      </form>
+    </mat-list>
+  </mat-card-content>
+
+  <!-- No Items Yet -->
+  <mat-card-content *ngIf="!todoList.length" class="no-things-todo">
+    <p>No Things To Do ! Start by adding new tasks..</p>
+    <div>
+      <button class="cursorPointer" color="primary" (click)="todoDialog()" mat-button>
+        <span>Add Task </span>
+        <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>
+      </button>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
+
+<!-- Popup Component for addign new Tasks -->
+<app-popup [popupTitle]="titleText" [inputTitle]="'Task Name:'" [placeholder]="'What do you need to do?'" [okText]="okButtonText"
+  (valueEmitted)="updateTodo($event)" [showPrompt]="showDialog">
+</app-popup>
