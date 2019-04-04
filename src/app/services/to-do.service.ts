@@ -34,9 +34,9 @@ export class ToDoService {
    * @param index : index of task to duplicate
    */
   duplicate(index) {
-    var cloned = this.toDoList[index];
+    var cloned = Object.assign({}, this.toDoList[index]);
     cloned.id = Date.now();
-    this.toDoList.push(Object.assign({}, cloned));
+    this.toDoList.push(cloned);
   } 
 
   /**
