@@ -6,27 +6,51 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class ToDoService {
 
+  /**
+   * Todo list
+   */
   toDoList: any = [];
 
   constructor() {
   }
 
+  /**
+   * Get Todo List
+   */
   getToDoList() {
     return this.toDoList;
   }
 
+  /**
+   * Set new Todo list
+   * @param newList - new Todo list
+   */
   setToDoList(newList) {
     this.toDoList = newList
   }
 
+  /**
+   * Duplicate task with specific index
+   * @param index : index of task to duplicate
+   */
   duplicate(index) {
-    this.toDoList.push(Object.assign({}, this.toDoList[index]));
+    var cloned = this.toDoList[index];
+    cloned.id = Date.now();
+    this.toDoList.push(Object.assign({}, cloned));
   } 
 
+  /**
+   * Remove task with specific index
+   * @param index : index of task to remove
+   */
   remove(index: number) {
     this.toDoList.splice(index, 1);
   }
 
+  /**
+   * Add task
+   * @param task : task to add
+   */
   addToDo(task) {
     this.toDoList.unshift(
       {
@@ -38,7 +62,6 @@ export class ToDoService {
 
     // to prevent showing completed tasks on top.
     this.sortToDoList();
-    // could be achieved more effiecently by adding new element to the bottom of the completed tasks section
   }
 
   /**

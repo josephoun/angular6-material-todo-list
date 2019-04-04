@@ -5,7 +5,7 @@
     <mat-toolbar-row>
       <div>Things To Do </div>
       <div>
-        <button class="cursorPointer" color="indigo" (click)="todoDialog()" mat-button>
+        <button class="cursorPointer" color="indigo" (click)="editTaskCallback()" mat-button>
           <span>Add Task </span>
           <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>
         </button>
@@ -129,7 +129,7 @@
           <!-- Edit -->
           <div>
             <mat-select>
-              <mat-option (click)="todoDialog(todo)">
+              <mat-option (click)="editTaskCallback(todo)">
                 Edit
               </mat-option>
               <mat-option (click)="duplicate(index)">
@@ -150,7 +150,7 @@
   <mat-card-content *ngIf="!todoList.length" class="no-things-todo">
     <p>No Things To Do ! Start by adding new tasks..</p>
     <div>
-      <button class="cursorPointer" color="primary" (click)="todoDialog()" mat-button>
+      <button class="cursorPointer" color="primary" (click)="editTaskCallback()" mat-button>
         <span>Add Task </span>
         <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>
       </button>
@@ -162,5 +162,5 @@
 
 <!-- Popup Component for addign new Tasks -->
 <app-popup [popupTitle]="titleText" [inputTitle]="'Task Name:'" [placeholder]="'What do you need to do?'" [okText]="okButtonText"
-  (valueEmitted)="updateTodo($event)" [showPrompt]="showDialog">
+  (valueEmitted)="updateTodo($event)" [showPrompt]="showPopup">
 </app-popup>
