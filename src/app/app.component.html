@@ -4,7 +4,7 @@
     <mat-toolbar-row>
       <div>Things To Do </div>
       <div>
-        <button class="cursorPointer" color="indigo" (click)="editTaskCallback()" mat-button>
+        <button class="cursorPointer" color="indigo" (click)="addTaskCallback()" mat-button>
           <span>Add Task </span>
           <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>
         </button>
@@ -136,7 +136,7 @@
   <mat-card-content *ngIf="!todoList.length" class="no-things-todo">
     <p>No Things To Do ! Start by adding new tasks..</p>
     <div>
-      <button class="cursorPointer" color="primary" (click)="editTaskCallback()" mat-button>
+      <button class="cursorPointer" color="primary" (click)="addTaskCallback()" mat-button>
         <span>Add Task </span>
         <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>
       </button>
