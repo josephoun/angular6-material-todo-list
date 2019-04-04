@@ -1,4 +1,4 @@
-<div class="overlay popup" *ngIf="showPrompt.val">
+<div class="overlay popup">
   <mat-card class="modalDialog">
 
     <mat-toolbar color="primary">
@@ -13,7 +13,7 @@
               </mat-label>
               <input matInput [placeholder]="placeholder" formControlName="taskName"/>
             </mat-form-field>
-      
+
             <mat-form-field class="full-width">
               <input [min]="minDate" matInput formControlName="dueDate" [matDatepicker]="duedatepicker" placeholder="Due Date">
               <mat-datepicker-toggle matSuffix [for]="duedatepicker"></mat-datepicker-toggle>
@@ -22,8 +22,8 @@
       </form>
     </mat-card-content>
     <mat-card-actions class="center">
-      <button mat-button (click)="emitValue(true)" color="primary">{{cancelText}}</button>
-      <button mat-raised-button type="submit" [disabled]="!popupForm.valid" (click)="emitValue()" color="primary">
+      <button mat-button (click)="cancel()" color="primary">{{cancelText}}</button>
+      <button mat-raised-button type="submit" [disabled]="!popupForm.valid" (click)="addOrEdit()" color="primary">
         {{okText}}
       </button>
     </mat-card-actions>

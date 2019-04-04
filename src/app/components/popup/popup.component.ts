@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToDoService } from 'src/app/services/to-do.service';
 
@@ -11,46 +11,43 @@ import { ToDoService } from 'src/app/services/to-do.service';
 export class PopupComponent implements OnInit {
 
   @Input() task: any;
-  @Input() taskName: any;
-  @Input() dueDate: Date;
-  @Input() showPrompt: any;
   @Input() placeholder: string;
+  @Input() showPrompt: any;
   @Input() popupTitle: string;
   @Input() inputTitle: string;
   @Input() okText: string;
   @Input() cancelText: string;
   @Output() valueEmitted = new EventEmitter<string>();
-  popupForm: any;
+  public popupForm: FormGroup;
 
   /**
    * minimum date selection in task Due Date
    */
-  minDate : Date;
-  
+  minDate: Date;
+
   constructor(private toDoService: ToDoService) {
     this.cancelText = 'Cancel';
     this.minDate = new Date();
   }
 
-  resetForm() {
-    this.popupForm.reset();
-  } 
+  cancel() {
+    this.showPrompt.val = false;
+  }
 
-  emitValue(cancel) {
-    if (cancel) {
-      this.showPrompt.val = false;
-      return;
-    }
+  addOrEdit() {
     if (this.popupForm && this.popupForm.value)  {
-      var obj = {title : this.popupForm.value.taskName, dueDate: this.popupForm.value.dueDate};  
+      var obj = {title : this.popupForm.value.taskName, dueDate: this.popupForm.value.dueDate};
       this.valueEmitted.emit(JSON.stringify(obj));
     }
   }
-  
+
   ngOnInit() {
     this.popupForm = new FormGroup({
       taskName: new FormControl('', Validators.required),
       dueDate: new FormControl('', Validators.required),
     });
+    if (this.task !== null) {
+      this.popupForm.setValue({taskName: this.task.title, dueDate: this.task.dueDate});
+    }
   }
 }

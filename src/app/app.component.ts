@@ -13,7 +13,7 @@ import { PopupComponent } from './components/popup/popup.component';
 export class AppComponent {
 
   /**
-   * Popup child component 
+   * Popup child component
    */
   @ViewChild(PopupComponent) popupComponent: PopupComponent;
 
@@ -67,15 +67,16 @@ export class AppComponent {
    * @param todo - Task in edit mode. Null if Creation mode (not editing mode).
    */
   editTaskCallback(todo = null) {
-    this.okButtonText = 'Create task';
     this.editingTodo = todo;
-    if (todo) {
-      this.okButtonText = 'Edit and Save';
-      this.titleText = 'Edit Task';
-    } else {
-      this.popupComponent.resetForm();
-    }
+    this.okButtonText = 'Edit and Save';
+    this.titleText = 'Edit Task';
+    this.showPopup.val = true;
+  }
 
+  addTaskCallback() {
+    this.okButtonText = 'Create task';
+    this.titleText = 'Add Task';
+    this.editingTodo = null;
     this.showPopup.val = true;
   }
 
@@ -84,7 +85,7 @@ export class AppComponent {
    * @param index - index of task to remove
    */
   remove(index: number) {
-    //this.todoList.splice(index, 1);
+    // this.todoList.splice(index, 1);
     this.toDoService.remove(index);
   }
 
@@ -98,10 +99,10 @@ export class AppComponent {
 
   /**
    * Override todo task in edit mode
-   * @param task 
+   * @param task
    */
   editTodo(task) {
-    Object.assign(this.editingTodo, task)
+    Object.assign(this.editingTodo, task);
   }
 
   /**
@@ -119,13 +120,12 @@ export class AppComponent {
    */
   updateTodo(task) {
     var task = JSON.parse(task);
-
     if (task && task.title) {
       if (this.editingTodo) {
-        //edit mode
+        // edit mode
         this.editTodo(task);
       } else {
-        //creation mode
+        // creation mode
         this.addTodo(task);
       }
     }

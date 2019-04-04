@@ -147,6 +147,8 @@
 
 
 <!-- Popup Component for addign new Tasks -->
-<app-popup [popupTitle]="titleText" [inputTitle]="'Task Name:'" [placeholder]="'What do you need to do?'" [okText]="okButtonText"
-  (valueEmitted)="updateTodo($event)" [showPrompt]="showPopup">
-</app-popup>
+<div *ngIf="showPopup.val">
+  <app-popup [task]="editingTodo" [popupTitle]="titleText" [inputTitle]="'Task Name:'" [placeholder]="'What do you need to do?'" [okText]="okButtonText"
+    (valueEmitted)="updateTodo($event)" [showPrompt]="showPopup">
+  </app-popup>
+</div>
