@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,9 @@ export class ToDoService {
     this.toDoList = newList
   }
 
+  duplicate(index) {
+    this.toDoList.push(Object.assign({}, this.toDoList[index]));
+  } 
 
   remove(index: number) {
     this.toDoList.splice(index, 1);
@@ -33,14 +37,14 @@ export class ToDoService {
       });
 
     // to prevent showing completed tasks on top.
-    this.sortTodoList();
+    this.sortToDoList();
     // could be achieved more effiecently by adding new element to the bottom of the completed tasks section
   }
 
   /**
    * sort todo list , completed tasks will be moved to bottom
    **/
-  sortTodoList() {
+  sortToDoList() {
     this.toDoList.sort(function (a, b) {
       // false values first
       return (a.completed === b.completed) ? 0 : a.completed ? 1 : -1;

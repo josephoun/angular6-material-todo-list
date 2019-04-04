@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToDoService } from './services/to-do.service'
+import { PopupComponent } from './components/popup/popup.component';
 
 @Component({
   selector: 'app-root',
@@ -10,18 +11,17 @@ import { ToDoService } from './services/to-do.service'
 })
 
 export class AppComponent {
+  @ViewChild(PopupComponent) popupComponent: PopupComponent;
 
-  showDialog: any = {val: false};
+  showDialog: any = { val: false };
   editingTodo: any = null;
-  task: any;
   todoList: any = [];
-  fieldValue: '';
   okButtonText = 'Create task';
   titleText = 'New Task';
   filterForm = this.getFilterForm();
 
-  constructor(private todoService: ToDoService) {
-    this.todoList = this.todoService.getToDoList();
+  constructor(private toDoService: ToDoService) {
+    this.todoList = this.toDoService.getToDoList();
   }
 
   getFilterForm() {
@@ -36,21 +36,22 @@ export class AppComponent {
     this.okButtonText = 'Create task';
     this.editingTodo = todo;
     if (todo) {
-      this.task = todo;
       this.okButtonText = 'Edit and Save';
       this.titleText = 'Edit Task';
-
+    } else {
+      this.popupComponent.resetForm();
     }
+
     this.showDialog.val = true;
   }
 
   remove(index: number) {
     //this.todoList.splice(index, 1);
-    this.todoService.remove(index);
+    this.toDoService.remove(index);
   }
 
   duplicate(index: number) {
-    this.todoList.push(Object.assign({}, this.todoList[index]));
+    this.toDoService.duplicate(index);
   }
 
   editTodo(task) {
@@ -59,7 +60,7 @@ export class AppComponent {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.todoList, event.previousIndex, event.currentIndex);
-    this.todoService.sortTodoList();
+    this.toDoService.sortToDoList();
   }
 
   updateTodo(task) {
@@ -75,20 +76,19 @@ export class AppComponent {
     this.hideDialog();
   }
 
-  addTodo(task) {
-   this.todoService.addToDo(task);
+  sortToDoList() {
+    this.toDoService.sortToDoList();
+  }
 
+  addTodo(task) {
+    this.toDoService.addToDo(task);
     // to prevent showing completed tasks on top.
-    this.todoService.sortTodoList();
+    this.toDoService.sortToDoList();
     // could be achieved more effiecently by adding new element to the bottom of the completed tasks section
   }
 
   hideDialog() {
     this.showDialog.val = false;
     this.editingTodo = null;
-  }
-
-  ngOnInit() {
-    
   }
 }

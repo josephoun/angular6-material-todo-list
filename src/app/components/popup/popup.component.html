@@ -11,11 +11,11 @@
               <mat-label>
                 {{inputTitle}}
               </mat-label>
-              <input matInput [placeholder]="placeholder" formControlName="taskName" />
+              <input matInput [placeholder]="placeholder" formControlName="taskName"/>
             </mat-form-field>
       
             <mat-form-field class="full-width">
-              <input [min]="minDate" matInput formControlName="dueDate" [matDatepicker]="duedatepicker" [(ngModel)]="dueDate" placeholder="Due Date">
+              <input [min]="minDate" matInput formControlName="dueDate" [matDatepicker]="duedatepicker" placeholder="Due Date">
               <mat-datepicker-toggle matSuffix [for]="duedatepicker"></mat-datepicker-toggle>
               <mat-datepicker #duedatepicker></mat-datepicker>
             </mat-form-field>

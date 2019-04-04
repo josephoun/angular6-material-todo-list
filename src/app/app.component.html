@@ -117,7 +117,8 @@
               type="checkbox"
               id="item_{{index}}" 
               [name]="'item'+index" 
-              [(ngModel)]="todo.completed">
+              [(ngModel)]="todo.completed"
+              (change)="sortToDoList()">
             </mat-checkbox>
           </div>
 
