@@ -1,5 +1,4 @@
 <mat-card class="todoapp">
-
   <!-- Toolbar -->
   <mat-toolbar color="primary">
     <mat-toolbar-row>
@@ -59,7 +58,7 @@
               <mat-datepicker #duedatepicker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
-         
+
         </form>
       </mat-expansion-panel>
     </mat-accordion>
@@ -95,16 +94,8 @@
 
           <div class="todo-custom-placeholder" *cdkDragPlaceholder></div>
 
-          <div [class.completed]="todo.completed">
+          <div [class.completed]="todo.completed" matTooltipClass="todo-title-tooltip" matTooltip="{{todo.title}}">
             <span>{{todo.title}}</span>
-
-            <span [hidden]="!todo.completed">
-              <mat-icon color="primary">done</mat-icon>
-            </span>
-
-            <span [hidden]="todo.completed">
-              <mat-icon color="primary">notification_important</mat-icon>
-            </span>
           </div>
 
           <div>
@@ -112,12 +103,7 @@
           </div>
 
           <div>
-            <mat-checkbox 
-              color="primary" 
-              type="checkbox"
-              id="item_{{index}}" 
-              [name]="'item'+index" 
-              [(ngModel)]="todo.completed"
+            <mat-checkbox color="primary" type="checkbox" id="item_{{index}}" [name]="'item'+index" [(ngModel)]="todo.completed"
               (change)="sortToDoList()">
             </mat-checkbox>
           </div>

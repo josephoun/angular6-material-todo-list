@@ -14,11 +14,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { PopupComponent } from './components/popup/popup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 import { ToDoService } from './services/to-do.service';
 
@@ -30,6 +32,7 @@ import { ToDoService } from './services/to-do.service';
     SearchPipe
   ],
   imports: [
+    MatTooltipModule,
     MatExpansionModule,
     MatSelectModule,
     DragDropModule,
