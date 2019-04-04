@@ -30,10 +30,16 @@ export class PopupComponent implements OnInit {
     this.minDate = new Date();
   }
 
+  /**
+   * Cancel popup and hide it
+   */
   cancel() {
     this.showPrompt.val = false;
   }
 
+  /**
+   * Add or edit task button callback
+   */
   addOrEdit() {
     if (this.popupForm && this.popupForm.value)  {
       var obj = {title : this.popupForm.value.taskName, dueDate: this.popupForm.value.dueDate};
@@ -41,6 +47,9 @@ export class PopupComponent implements OnInit {
     }
   }
 
+  /**
+   * On Init, re-initiate Form group and set it to task data IF user is in edit mode.
+   */
   ngOnInit() {
     this.popupForm = new FormGroup({
       taskName: new FormControl('', Validators.required),
