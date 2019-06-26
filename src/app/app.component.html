@@ -13,7 +13,6 @@
   </mat-toolbar>
 
   <mat-card-content *ngIf="todoList.length">
-
     <!-- Filter section -->
     <mat-accordion>
       <mat-expansion-panel class="filter-panel cursorPointer">
@@ -21,7 +20,6 @@
           <mat-panel-title>
             Filter ToDo List
           </mat-panel-title>
-
         </mat-expansion-panel-header>
 
         <form [formGroup]="filterForm" class="filter-form">
@@ -141,7 +139,7 @@
         <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>
       </button>
     </div>
-
+    
   </mat-card-content>
 </mat-card>
 
