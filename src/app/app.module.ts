@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AppComponent } from './app.component';
 import { SearchPipe } from './pipes/search-pipe.pipe';
+import { GetAffiliatePipe } from './pipes/get-affiliate.pipe';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule} from '@angular/material';
 import {MatListModule} from '@angular/material/list';
@@ -20,6 +21,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { PopupComponent } from './components/popup/popup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatTableModule} from '@angular/material/table';
 
 
 import { ToDoService } from './services/to-do.service';
@@ -29,7 +31,8 @@ import { ToDoService } from './services/to-do.service';
   declarations: [
     AppComponent,
     PopupComponent,
-    SearchPipe
+    SearchPipe,
+    GetAffiliatePipe
   ],
   imports: [
     MatTooltipModule,
@@ -50,7 +53,8 @@ import { ToDoService } from './services/to-do.service';
     MatCardModule,
     MatCheckboxModule,
     MatListModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule
   ],
   providers: [ToDoService],
   bootstrap: [AppComponent],

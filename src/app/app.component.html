@@ -1,16 +1,16 @@
 <mat-card class="todoapp">
   <!-- Toolbar -->
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <div>Things To Do </div>
-      <div>
-        <button class="cursorPointer" color="indigo" (click)="addTaskCallback()" mat-button>
-          <span>Add Task </span>
-          <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>
-        </button>
-      </div>
-    </mat-toolbar-row>
-  </mat-toolbar>
+<!--  <mat-toolbar color="primary">-->
+<!--    <mat-toolbar-row>-->
+<!--      <div>Things To Do </div>-->
+<!--      <div>-->
+<!--        <button class="cursorPointer" color="indigo" (click)="addTaskCallback()" mat-button>-->
+<!--          <span>Add Task </span>-->
+<!--          <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </mat-toolbar-row>-->
+<!--  </mat-toolbar>-->
 
   <mat-card-content *ngIf="todoList.length">
     <!-- Filter section -->
@@ -18,7 +18,7 @@
       <mat-expansion-panel class="filter-panel cursorPointer">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Filter ToDo List
+            Filter
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -64,63 +64,128 @@
     <!-- ToDo List header -->
     <mat-list>
       <mat-list-item class="header">
-        <div class="mat-body-2">Title</div>
-        <div class="mat-body-2">Due Date</div>
-        <div class="mat-body-2">Completed</div>
-        <div class="mat-body-2">ID</div>
+        <div class="mat-body-2">User Id</div>
+        <div class="mat-body-2">Balance</div>
+        <div class="mat-body-2">Representative</div>
+        <div class="mat-body-2">Status</div>
+        <div class="mat-body-2">White Label</div>
+        <div class="mat-body-2">Marketing</div>
+        <div class="mat-body-2">Name</div>
+        <div class="mat-body-2">Phone</div>
+        <div class="mat-body-2">Email</div>
+        <div class="mat-body-2">Created Date</div>
+        <div class="mat-body-2">Last CRM</div>
         <div class="mat-body-2">Actions</div>
       </mat-list-item>
     </mat-list>
 
     <!-- ToDo List Items -->
     <mat-list>
-      <form cdkDropList class="todo-list" (cdkDropListDropped)="drop($event)">
-        <mat-list-item cdkDrag class="todo-box" *ngFor="let todo of todoList | SearchPipe:filterForm.value ; let index=index"
+      <form class="todo-list">
+        <mat-list-item class="todo-box" *ngFor="let todo of todoList | SearchPipe:filterForm.value ; let index=index"
           class="list-item">
 
-          <div *cdkDragPreview>
 
-            <div>
-              {{todo.title}}
-            </div>
-
-            <div>
-              {{todo.dueDate}}
-            </div>
-
-          </div>
-
-          <div class="todo-custom-placeholder" *cdkDragPlaceholder></div>
-
+          <!-- user id -->
           <div [class.completed]="todo.completed" matTooltipClass="todo-title-tooltip" matTooltip="{{todo.title}}">
-            <span>{{todo.title}}</span>
+            <span>{{todo.id}}</span>
           </div>
 
+          <!-- balance -->
           <div>
-            {{todo.dueDate| date:'yyyy/MM/dd'}}
+            {{todo.balance}}$
           </div>
 
+<!--          <div>-->
+<!--            <mat-checkbox color="primary" type="checkbox" id="item_{{index}}" [name]="'item'+index" [(ngModel)]="todo.completed"-->
+<!--              (change)="sortToDoList()">-->
+<!--            </mat-checkbox>-->
+<!--          </div>-->
+
+
+          <!-- representative -->
           <div>
-            <mat-checkbox color="primary" type="checkbox" id="item_{{index}}" [name]="'item'+index" [(ngModel)]="todo.completed"
-              (change)="sortToDoList()">
-            </mat-checkbox>
+            <mat-form-field>
+              <mat-select matNativeControl required>
+                <mat-option *ngFor="let representative of metaData.repList" [value]="representative.value">
+                  {{representative.text}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
 
+          <!-- status -->
           <div>
-            {{todo.id}}
+            <mat-form-field>
+              <mat-select matNativeControl required>
+                <mat-option *ngFor="let status of metaData.statuses" [value]="status.value">
+                  {{status.text}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
 
-          <!-- Edit -->
+          <!-- white label -->
+          <div>
+            <mat-form-field>
+              <mat-select matNativeControl required>
+                <mat-option *ngFor="let whitelabel of metaData.business_units" [value]="whitelabel.value">
+                  {{whitelabel.text}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- marketing -->
+          <div>
+            <div>{{ todo.affiliate_id | GetAffiliate:metaData.affiliates }}</div>
+            <div>{{ todo.affiliate_mt_id | GetAffiliate:metaData.campaigns }}</div>
+          </div>
+
+          <!-- Name -->
+          <div>
+
+            {{todo.firstname}} {{todo.lastname}}
+          </div>
+
+          <!-- phone -->
+          <div>
+            <div>{{todo.phone}}</div>
+            <div>{{todo.country_shortname | GetAffiliate:metaData.countries}}</div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <div>{{todo.email}}</div>
+
+          </div>
+
+          <!-- Created -->
+          <div>
+            <div>{{todo.registration_date | date:'yyyy/MM/dd'}}</div>
+            <div>{{todo.registration_date | date:'hh:mm:ss'}}</div>
+          </div>
+
+          <!-- Last CRM -->
+          <div>
+            <div>{{todo.last_crm_date | date:'yyyy/MM/dd'}}</div>
+            <div>{{todo.last_crm_date | date:'hh:mm:ss'}}</div>
+          </div>
+
+          <!-- Actions -->
           <div>
             <mat-select>
-              <mat-option (click)="editTaskCallback(todo)">
-                Edit
+<!--              <mat-option (click)="editTaskCallback(todo)">-->
+<!--                Edit-->
+<!--              </mat-option> -->
+              <mat-option>
+                Trader
               </mat-option>
-              <mat-option (click)="duplicate(index)">
-                Duplicate
+              <mat-option>
+                Broker
               </mat-option>
-              <mat-option (click)="remove(index)">
-                Delete
+              <mat-option>
+                Reminder
               </mat-option>
             </mat-select>
           </div>
@@ -129,20 +194,41 @@
       </form>
     </mat-list>
   </mat-card-content>
-
-  <!-- No Items Yet -->
-  <mat-card-content *ngIf="!todoList.length" class="no-things-todo">
-    <p>No Things To Do ! Start by adding new tasks..</p>
-    <div>
-      <button class="cursorPointer" color="primary" (click)="addTaskCallback()" mat-button>
-        <span>Add Task </span>
-        <mat-icon aria-hidden="false" aria-label="Add Task">add</mat-icon>
-      </button>
-    </div>
-    
-  </mat-card-content>
 </mat-card>
 
+
+<!--<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
+
+<!--  &lt;!&ndash;- Note that these columns can be defined in any order.-->
+<!--        The actual rendered columns are set as a property on the row definition" &ndash;&gt;-->
+
+<!--  &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="position">-->
+<!--    <th mat-header-cell *matHeaderCellDef> No. </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.position}} </td>-->
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="name">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Name </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="weight">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Weight </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>-->
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="symbol">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Symbol </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
+<!--  </ng-container>-->
+
+<!--  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--</table>-->
 
 <!-- Popup Component for addign new Tasks -->
 <div *ngIf="showPopup.val">
